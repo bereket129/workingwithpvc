@@ -27,6 +27,7 @@ public class PVCPractice {
     @GetMapping("/read")
     public Properties read() throws Exception {
         Properties prop = new Properties();
+        //updated
         prop.load(new FileInputStream("/var/test.properties"));
         return prop;
 
