@@ -13,11 +13,11 @@ public class PVCPractice {
     @GetMapping("/write")
     public Boolean hello(@RequestParam String key, @RequestParam String value) throws IOException {
         Properties prop = new Properties();
-        prop.load(new FileInputStream("/var/test.properties"));
+        prop.load(new FileInputStream("/var/pvc/test.properties"));
         String oldvalue = (String) prop.setProperty(key,value);
         boolean updated = false;
         if (!value.equals(oldvalue)){
-            prop.store(new FileWriter("/var/test.properties"),"added value "+value);
+            prop.store(new FileWriter("/var/pvc/test.properties"),"added value "+value);
             updated = true;
             LOGGER.info("Wrote to file "+value);
         }
@@ -28,7 +28,7 @@ public class PVCPractice {
     public Properties read() throws Exception {
         Properties prop = new Properties();
         //updated
-        prop.load(new FileInputStream("/var/test.properties"));
+        prop.load(new FileInputStream("/var/pvc/test.properties"));
         return prop;
 
     }
