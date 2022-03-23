@@ -10,14 +10,18 @@ import java.util.List;
 @RestController
 public class PVCPractice {
 
-    @GetMapping("/")
-    public String hello() throws IOException {
-        FileWriter fileWriter = new FileWriter("/var/pvc/hello.txt",true);
-        BufferedWriter bw = new BufferedWriter(fileWriter);
-        bw.write("Hi There this is me, Bereket from west side campton");
-        bw.newLine();
-        bw.close();
-        return "Wrote to file";
+    @GetMapping("/write")
+    public Boolean hello(@RequestParam String key, @RequestParam String value) throws IOException {
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("/var/test.properties"));
+        String oldvalue = (String) prop.setProperty(key,value);
+        boolean updated = false;
+        if (!value.equals(oldvalue)){
+            prop.store(new FileWriter("src/main/java/com/example/workingwithpvc/test.properties"),"added value "+value);
+            updated = true;
+            LOGGER.info("Wrote to file "+value);
+        }
+        return updated;
     }
 
     @GetMapping("/read")
