@@ -17,26 +17,17 @@ public class PVCPractice {
         String oldvalue = (String) prop.setProperty(key,value);
         boolean updated = false;
         if (!value.equals(oldvalue)){
-            prop.store(new FileWriter("src/main/java/com/example/workingwithpvc/test.properties"),"added value "+value);
+            prop.store(new FileWriter("/var/test.properties"),"added value "+value);
             updated = true;
             LOGGER.info("Wrote to file "+value);
         }
         return updated;
     }
-
     @GetMapping("/read")
-    public List<String> read() throws Exception {
-        FileReader fileReader = new FileReader("/var/pvc/hello.txt");
-        ArrayList<String> string = new ArrayList<>();
-        BufferedReader br = new BufferedReader(fileReader);
-        String currentline = br.readLine();
-        while (currentline != null){
-            string.add(currentline);
-            currentline = br.readLine();
-        }
-
-        return string;
-
+    public Properties read() throws Exception {
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("/var/test.properties"));
+        return prop;
     }
 
 }
